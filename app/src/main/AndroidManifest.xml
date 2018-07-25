@@ -16,6 +16,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".TouchDelegateActivity" />
+        <activity android:name=".MoveLoggerActivity" />
+        <activity android:name=".MultitouchActivity" />
+        <activity android:name=".TouchForwardActivity" />
+        <activity android:name=".TouchInterceptActivity" />
+        <activity android:name=".TouchListenerActivity" />
+        <activity android:name=".TwoDimensionGestureScrollActivity" />
+        <activity android:name=".TwoDimensionScrollActivity" />
     </application>
 
 </manifest>
