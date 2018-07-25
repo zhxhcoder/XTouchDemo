@@ -1,0 +1,2 @@
+# XTouchDemo
+XTouchDemo,介绍android 内部事件传递机制及ViewGroup与View绘制过程
