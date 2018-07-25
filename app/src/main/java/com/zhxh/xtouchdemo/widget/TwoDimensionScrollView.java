@@ -12,41 +12,41 @@ import android.widget.OverScroller;
 public class TwoDimensionScrollView extends FrameLayout {
 
     //Fling components
-	private OverScroller mScroller;
+    private OverScroller mScroller;
     private VelocityTracker mVelocityTracker;
 
-	/* Positions of the last motion event */
-	private float mLastTouchX, mLastTouchY;
-	/* Drag threshold */
-	private int mTouchSlop;
+    /* Positions of the last motion event */
+    private float mLastTouchX, mLastTouchY;
+    /* Drag threshold */
+    private int mTouchSlop;
     /* Fling Velocity */
     private int mMaximumVelocity, mMinimumVelocity;
     /* Drag Lock */
     private boolean mDragging = false;
 
-	public TwoDimensionScrollView(Context context) {
-		super(context);
-		init(context);
-	}
+    public TwoDimensionScrollView(Context context) {
+        super(context);
+        init(context);
+    }
 
-	public TwoDimensionScrollView(Context context, AttributeSet attrs) {
-		super(context, attrs);
-		init(context);
-	}
+    public TwoDimensionScrollView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init(context);
+    }
 
-	public TwoDimensionScrollView(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs, defStyle);
-		init(context);
-	}
+    public TwoDimensionScrollView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        init(context);
+    }
 
-	private void init(Context context) {
-		mScroller = new OverScroller(context);
-		mVelocityTracker = VelocityTracker.obtain();
+    private void init(Context context) {
+        mScroller = new OverScroller(context);
+        mVelocityTracker = VelocityTracker.obtain();
         //Get system constants for touch thresholds
-		mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
+        mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
         mMaximumVelocity = ViewConfiguration.get(context).getScaledMaximumFlingVelocity();
         mMinimumVelocity = ViewConfiguration.get(context).getScaledMinimumFlingVelocity();
-	}
+    }
 
     /*
      * Override the measureChild... implementations to guarantee that the child view
@@ -76,9 +76,9 @@ public class TwoDimensionScrollView extends FrameLayout {
 
         child.measure(childWidthMeasureSpec, childHeightMeasureSpec);
     }
-	
-	@Override
-	public void computeScroll() {
+
+    @Override
+    public void computeScroll() {
         if (mScroller.computeScrollOffset()) {
             // This is called at drawing time by ViewGroup.  We use
             // this method to keep the fling animation going through
@@ -100,10 +100,10 @@ public class TwoDimensionScrollView extends FrameLayout {
             // Keep on drawing until the animation has finished.
             postInvalidate();
         }
-	}
-	
-	//Override scrollTo to do bounds checks on any scrolling request
-	@Override
+    }
+
+    //Override scrollTo to do bounds checks on any scrolling request
+    @Override
     public void scrollTo(int x, int y) {
         // we rely on the fact the View.scrollBy calls scrollTo.
         if (getChildCount() > 0) {
@@ -115,28 +115,28 @@ public class TwoDimensionScrollView extends FrameLayout {
             }
         }
     }
-	
-	/*
-	 * Utility method to initialize the Scroller and start redrawing
-	 */
-	public void fling(int velocityX, int velocityY) {
+
+    /*
+     * Utility method to initialize the Scroller and start redrawing
+     */
+    public void fling(int velocityX, int velocityY) {
         if (getChildCount() > 0) {
             int height = getHeight() - getPaddingBottom() - getPaddingTop();
             int width = getWidth() - getPaddingLeft() - getPaddingRight();
             int bottom = getChildAt(0).getHeight();
             int right = getChildAt(0).getWidth();
-    
+
             mScroller.fling(getScrollX(), getScrollY(), velocityX, velocityY,
-            		0, Math.max(0, right - width),
-            		0, Math.max(0, bottom - height));
-    
+                    0, Math.max(0, right - width),
+                    0, Math.max(0, bottom - height));
+
             invalidate();
         }
     }
-	
-	/*
-	 * Utility method to assist in doing bounds checking
-	 */
+
+    /*
+     * Utility method to assist in doing bounds checking
+     */
     private int clamp(int n, int my, int child) {
         if (my >= child || n < 0) {
             /* my >= child is this case:
@@ -156,13 +156,13 @@ public class TwoDimensionScrollView extends FrameLayout {
              */
             return 0;
         }
-        if ((my+n) > child) {
+        if ((my + n) > child) {
             /* this case:
              *                    |------ me ------|
              *     |------ child ------|
              *     |-- mScrollX --|
              */
-            return child-my;
+            return child - my;
         }
         return n;
     }
@@ -231,7 +231,7 @@ public class TwoDimensionScrollView extends FrameLayout {
                 float deltaY = mLastTouchY - y;
                 float deltaX = mLastTouchX - x;
                 //Check for slop on direct events
-                if (!mDragging && (Math.abs(deltaY) > mTouchSlop || Math.abs(deltaX) > mTouchSlop) ) {
+                if (!mDragging && (Math.abs(deltaY) > mTouchSlop || Math.abs(deltaX) > mTouchSlop)) {
                     mDragging = true;
                 }
                 if (mDragging) {
@@ -254,8 +254,8 @@ public class TwoDimensionScrollView extends FrameLayout {
                 // Compute the current velocity and start a fling if it is above
                 // the minimum threshold.
                 mVelocityTracker.computeCurrentVelocity(1000, mMaximumVelocity);
-                int velocityX = (int)mVelocityTracker.getXVelocity();
-                int velocityY = (int)mVelocityTracker.getYVelocity();
+                int velocityX = (int) mVelocityTracker.getXVelocity();
+                int velocityY = (int) mVelocityTracker.getYVelocity();
                 if (Math.abs(velocityX) > mMinimumVelocity || Math.abs(velocityY) > mMinimumVelocity) {
                     fling(-velocityX, -velocityY);
                 }

@@ -15,9 +15,9 @@ import java.io.InputStream;
 
 public class TwoDimensionGestureScrollActivity extends Activity {
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.gesture_scroll);
         ImageView iv = (ImageView) findViewById(R.id.imageView);
 
@@ -29,6 +29,6 @@ public class TwoDimensionGestureScrollActivity extends Activity {
         } catch (IOException e) {
             image = null;
         }
-		iv.setImageBitmap(image);
-	}
+        iv.setImageBitmap(image);
+    }
 }

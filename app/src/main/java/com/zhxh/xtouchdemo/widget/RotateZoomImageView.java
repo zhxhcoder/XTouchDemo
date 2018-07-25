@@ -88,7 +88,7 @@ public class RotateZoomImageView extends ImageView {
         float deltaY = event.getY(0) - event.getY(1);
         double radians = Math.atan(deltaY / deltaX);
         //Convert to degrees
-        int degrees = (int)(radians * 180 / Math.PI);
+        int degrees = (int) (radians * 180 / Math.PI);
 
         /*
          * Must use getActionMasked() for switching to pick up pointer events.

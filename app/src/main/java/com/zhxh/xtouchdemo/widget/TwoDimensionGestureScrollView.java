@@ -12,41 +12,41 @@ import android.widget.OverScroller;
 
 public class TwoDimensionGestureScrollView extends FrameLayout {
 
-	private GestureDetector mDetector;
-	private OverScroller mScroller;
-	
-	/* Positions of the last motion event */
-	private float mInitialX, mInitialY;
-	/* Drag threshold */
-	private int mTouchSlop;
-	
-	public TwoDimensionGestureScrollView(Context context) {
-		super(context);
-		init(context);
-	}
+    private GestureDetector mDetector;
+    private OverScroller mScroller;
 
-	public TwoDimensionGestureScrollView(Context context, AttributeSet attrs) {
-		super(context, attrs);
-		init(context);
-	}
+    /* Positions of the last motion event */
+    private float mInitialX, mInitialY;
+    /* Drag threshold */
+    private int mTouchSlop;
 
-	public TwoDimensionGestureScrollView(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs, defStyle);
-		init(context);
-	}
+    public TwoDimensionGestureScrollView(Context context) {
+        super(context);
+        init(context);
+    }
 
-	private void init(Context context) {
-		mDetector = new GestureDetector(context, mListener);
-		mScroller = new OverScroller(context);
-		//Get system constants for touch thresholds
-		mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
-	}
+    public TwoDimensionGestureScrollView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init(context);
+    }
+
+    public TwoDimensionGestureScrollView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        init(context);
+    }
+
+    private void init(Context context) {
+        mDetector = new GestureDetector(context, mListener);
+        mScroller = new OverScroller(context);
+        //Get system constants for touch thresholds
+        mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
+    }
 
     /*
-    * Override the measureChild... implementations to guarantee that the child view
-    * gets measured to be as large as it wants to be.  The default implementation will
-    * force some children to be only as large as this view.
-    */
+     * Override the measureChild... implementations to guarantee that the child view
+     * gets measured to be as large as it wants to be.  The default implementation will
+     * force some children to be only as large as this view.
+     */
     @Override
     protected void measureChild(View child, int parentWidthMeasureSpec, int parentHeightMeasureSpec) {
         int childWidthMeasureSpec;
@@ -70,9 +70,9 @@ public class TwoDimensionGestureScrollView extends FrameLayout {
 
         child.measure(childWidthMeasureSpec, childHeightMeasureSpec);
     }
-	
-	@Override
-	public void computeScroll() {
+
+    @Override
+    public void computeScroll() {
         if (mScroller.computeScrollOffset()) {
             // This is called at drawing time by ViewGroup.  We use
             // this method to keep the fling animation going through
@@ -85,10 +85,10 @@ public class TwoDimensionGestureScrollView extends FrameLayout {
             // Keep on drawing until the animation has finished.
             postInvalidate();
         }
-	}
-	
-	//Override scrollTo to do bounds checks on any scrolling request
-	@Override
+    }
+
+    //Override scrollTo to do bounds checks on any scrolling request
+    @Override
     public void scrollTo(int x, int y) {
         // we rely on the fact the View.scrollBy calls scrollTo.
         if (getChildCount() > 0) {
@@ -100,11 +100,11 @@ public class TwoDimensionGestureScrollView extends FrameLayout {
             }
         }
     }
-	
-	/*
-	 * Utility method to initialize the Scroller and start redrawing
-	 */
-	public void fling(int velocityX, int velocityY) {
+
+    /*
+     * Utility method to initialize the Scroller and start redrawing
+     */
+    public void fling(int velocityX, int velocityY) {
         if (getChildCount() > 0) {
             int height = getHeight() - getPaddingBottom() - getPaddingTop();
             int width = getWidth() - getPaddingLeft() - getPaddingRight();
@@ -112,16 +112,16 @@ public class TwoDimensionGestureScrollView extends FrameLayout {
             int right = getChildAt(0).getWidth();
 
             mScroller.fling(getScrollX(), getScrollY(), velocityX, velocityY,
-            		0, Math.max(0, right - width),
-            		0, Math.max(0, bottom - height));
-    
+                    0, Math.max(0, right - width),
+                    0, Math.max(0, bottom - height));
+
             invalidate();
         }
     }
-	
-	/*
-	 * Utility method to assist in doing bounds checking
-	 */
+
+    /*
+     * Utility method to assist in doing bounds checking
+     */
     private int clamp(int n, int my, int child) {
         if (my >= child || n < 0) {
             /* my >= child is this case:
@@ -141,13 +141,13 @@ public class TwoDimensionGestureScrollView extends FrameLayout {
              */
             return 0;
         }
-        if ((my+n) > child) {
+        if ((my + n) > child) {
             /* this case:
              *                    |------ me ------|
              *     |------ child ------|
              *     |-- mScrollX --|
              */
-            return child-my;
+            return child - my;
         }
         return n;
     }
@@ -164,13 +164,13 @@ public class TwoDimensionGestureScrollView extends FrameLayout {
 
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             //Call a helper method to start the scroller animation
-            fling((int)-velocityX/2, (int)-velocityY/2);
+            fling((int) -velocityX / 2, (int) -velocityY / 2);
             return true;
         }
 
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
             //Any view can be scrolled by simply calling its scrollBy() method
-            scrollBy((int)distanceX, (int)distanceY);
+            scrollBy((int) distanceX, (int) distanceY);
             return true;
         }
     };
